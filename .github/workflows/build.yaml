@@ -1,0 +1,72 @@
+on: [push, pull_request]
+
+name: Cook recipes
+
+jobs:
+  cook:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} build
+
+    env:
+      CC: clang
+      CXX: clang++
+      OBJC: clang
+      OBJCXX: clang++
+
+    strategy:
+      matrix:
+        os: [ 'macOS-10.15' ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Makefile
+        run: Rscript scripts/mkmk.R
+
+      - name: Remove local stuff
+        run: |
+          sudo mkdir /usr/local/.disabled
+          sudo mv /usr/local/* /usr/local/.disabled/
+
+      - name: Build tools
+        run: |
+          make -C build pkgconfig
+
+      - name: Stubs
+        run: |
+          sudo mkdir -p /usr/local/lib/pkgconfig
+          sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
+
+      - name: Build R dependencies
+        run: make -C build gmp
+
+      - name: Verify gmp build
+        env:
+          GMP: build/gmp-6.2.1-dst/usr/local
+        run: |
+          echo "#include <gmp.h>" | ${CXX} -E -I${GMP}/include -xc++ - 2>&1
+          if [ $? -ne 0 ]; then
+            echo "failed"
+            exit 1;
+          fi
+
+      - name: Verify gmpxx build
+        env:
+          GMP: build/gmp-6.2.1-dst/usr/local
+        run: |
+          echo "#include <gmpxx.h>" | ${CXX} -E -I${GMP}/include -xc++ - >/dev/null 2>&1
+          if [ $? -ne 0 ]; then
+            echo "failed"
+            exit 1;
+          fi
+
+      - name: Collect
+        run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
+
+      - name: Upload
+        if: success()
+        uses: actions/upload-artifact@master
+        with:
+          name: recipes-build
+          path: deploy
