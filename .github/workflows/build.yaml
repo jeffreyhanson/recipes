@@ -41,19 +41,10 @@ jobs:
       - name: Build R dependencies
         run: make -C build gmp
 
-      - name: Inspect
-        env:
-          GMP: build/gmp-6.2.1-dst/usr/local
-        run: |
-         ls -la ${GMP}
-         ls -la ${GMP}/include
-         ls -la ${GMP}/lib
-
       - name: Verify gmp build
         env:
           GMP: build/gmp-6.2.1-dst/usr/local
         run: |
-          echo "#include <gmp.h>" | ${CXX} -E -I${GMP}/include -xc++ -
           echo "#include <gmp.h>" | ${CXX} -E -I${GMP}/include -xc++ - 2>&1
           if [ $? -ne 0 ]; then
             echo "failed"
@@ -64,7 +55,6 @@ jobs:
         env:
           GMP: build/gmp-6.2.1-dst/usr/local
         run: |
-          echo "#include <gmpxx.h>" | ${CXX} -E -I${GMP}/include -xc++ -
           echo "#include <gmpxx.h>" | ${CXX} -E -I${GMP}/include -xc++ - >/dev/null 2>&1
           if [ $? -ne 0 ]; then
             echo "failed"
