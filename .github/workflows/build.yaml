@@ -24,6 +24,9 @@ jobs:
       - name: Create Makefile
         run: Rscript scripts/mkmk.R
 
+      - name: Verify package build
+        run: Rscript -e "install.packages('surveyvoi')"
+
       - name: Remove local stuff
         run: |
           sudo mkdir /usr/local/.disabled
