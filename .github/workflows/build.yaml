@@ -51,7 +51,7 @@ jobs:
             fi
 
         - name: Verify gmpxx build
-        run: |
+          run: |
             echo "#include <gmpxx.h>" | ${CXX} -E -lgmpxx -xc++ - >/dev/null 2>&1
             if [ $? -ne 0 ]; then
               echo "#include <gmpxx.h>" | ${CXX} -E -lgmpxx -xc++ -
