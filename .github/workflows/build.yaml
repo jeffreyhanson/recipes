@@ -25,7 +25,7 @@ jobs:
         run: Rscript scripts/mkmk.R
 
       - name: Verify package build
-        run: Rscript -e "install.packages('surveyvoi')"
+        run: Rscript -e "install.packages('surveyvoi', repos='https://cloud.r-project.org/')"
 
       - name: Remove local stuff
         run: |
