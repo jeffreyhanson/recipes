@@ -24,9 +24,6 @@ jobs:
       - name: Create Makefile
         run: Rscript scripts/mkmk.R
 
-      - name: Verify package build
-        run: Rscript -e "install.packages('surveyvoi', repos='https://cloud.r-project.org/')"
-
       - name: Remove local stuff
         run: |
           sudo mkdir /usr/local/.disabled
@@ -42,7 +39,7 @@ jobs:
           sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
 
       - name: Build R dependencies
-        run: make -C build gmp
+        run: make -C build gmp mpfr
 
       - name: Verify gmp build
         env:
@@ -65,7 +62,9 @@ jobs:
           fi
 
       - name: Verify package build
-        run: Rscript -e "install.packages('surveyvoi')"
+        run: |
+          sudo mv /usr/local/.disabled/R /usr/local/R
+          Rscript -e "install.packages('surveyvoi', repos='https://cloud.r-project.org/')"
 
       - name: Collect
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
