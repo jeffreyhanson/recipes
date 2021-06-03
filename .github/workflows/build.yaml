@@ -53,8 +53,8 @@ jobs:
         env:
           GMP: build/gmp-6.2.1-dst/usr/local
         run: |
-          echo "#include <gmp.h>" | ${CXX} -E -I${GMP}/include -L${GMP}lib -lgmp -xc++ -
-          echo "#include <gmp.h>" | ${CXX} -E -I${GMP}/include -L${GMP}lib -lgmp -xc++ - 2>&1
+          echo "#include <gmp.h>" | ${CXX} -E -I${GMP}/include -xc++ -
+          echo "#include <gmp.h>" | ${CXX} -E -I${GMP}/include -xc++ - 2>&1
           if [ $? -ne 0 ]; then
             echo "failed"
             exit 1;
@@ -64,8 +64,8 @@ jobs:
         env:
           GMP: build/gmp-6.2.1-dst/usr/local
         run: |
-          echo "#include <gmpxx.h>" | ${CXX} -E -I${GMP}/include -L${GMP}lib -lgmpxx -xc++ -
-          echo "#include <gmpxx.h>" | ${CXX} -E -I${GMP}/include -L${GMP}lib -lgmpxx -xc++ - >/dev/null 2>&1
+          echo "#include <gmpxx.h>" | ${CXX} -E -I${GMP}/include -xc++ -
+          echo "#include <gmpxx.h>" | ${CXX} -E -I${GMP}/include -xc++ - >/dev/null 2>&1
           if [ $? -ne 0 ]; then
             echo "failed"
             exit 1;
