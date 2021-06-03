@@ -62,7 +62,7 @@ jobs:
           fi
 
       - name: Verify package build
-        run: R -e "install.packages('surveyvoi')"
+        run: Rscript -e "install.packages('surveyvoi')"
 
       - name: Collect
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
