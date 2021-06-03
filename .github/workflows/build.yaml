@@ -43,9 +43,9 @@ jobs:
 
       - name: Verify gmp build
         run: |
-            echo "#include <gmp.h>" | ${CXX} -E -lgmp -xc++
             echo "#include <gmp.h>" | ${CXX} -E -lgmp -xc++ - >/dev/null 2>&1
             if [ $? -ne 0 ]; then
+              echo "#include <gmp.h>" | ${CXX} -E -lgmp -xc++ -
               echo "failed"
               exit 1;
             fi
@@ -54,6 +54,7 @@ jobs:
         run: |
             echo "#include <gmpxx.h>" | ${CXX} -E -lgmpxx -xc++ - >/dev/null 2>&1
             if [ $? -ne 0 ]; then
+              echo "#include <gmpxx.h>" | ${CXX} -E -lgmpxx -xc++ -
               echo "failed"
               exit 1;
             fi
