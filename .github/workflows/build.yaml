@@ -64,7 +64,7 @@ jobs:
       - name: Inspect builds
         run: |
           ls -la /usr/local/.disabled
-          la -la build
+          ls -la build
           ls -la build/gmp-6.2.1-dst
           ls -la build/gmp-6.2.1-dst/usr/local
           ls -la build/gmp-6.2.1-dst/usr/local/include
