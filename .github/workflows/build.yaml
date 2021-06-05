@@ -80,7 +80,7 @@ jobs:
           sudo cp -R build/gmp-6.2.1-dst/usr/local/lib/* /usr/local/lib
           sudo cp -R build/mpfr-4.1.0-dst/usr/local/include/* /usr/local/include
           sudo cp -R build/mpfr-4.1.0-dst/usr/local/lib/* /usr/local/lib
-          Rscript -e "install.packages('surveyvoi', repos='https://cloud.r-project.org/')"
+          R -e "install.packages('surveyvoi', repos='https://cloud.r-project.org/')"
 
       - name: Collect
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
