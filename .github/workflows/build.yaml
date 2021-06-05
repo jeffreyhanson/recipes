@@ -61,20 +61,25 @@ jobs:
             exit 1;
           fi
 
-      - name: Verify package build
+      - name: Inspect builds
         run: |
           ls -la /usr/local/.disabled
+          la -la build
+          ls -la build/gmp-6.2.1-dst
           ls -la build/gmp-6.2.1-dst/usr/local
           ls -la build/gmp-6.2.1-dst/usr/local/include
           ls -la build/gmp-6.2.1-dst/usr/local/lib
-          la -la build/mpfr-4.1.0-dst/usr/local
+          la -la build/mpfr-4.1.0-dst
           la -la build/mpfr-4.1.0-dst/usr/local/include
           la -la build/mpfr-4.1.0-dst/usr/local/lib
+
+      - name: Verify package build
+        run: |
           sudo mv /usr/local/.disabled/bin/R /usr/local/bin/R
-          sudo cp -R build/gmp-6.2.1-dst/usr/local/include/* /usr/include
-          sudo cp -R build/gmp-6.2.1-dst/usr/local/lib/* /usr/lib
-          sudo cp -R build/mpfr-4.1.0-dst/usr/local/include/* /usr/include
-          sudo cp -R build/mpfr-4.1.0-dst/usr/local/lib/* /usr/lib
+          sudo cp -R build/gmp-6.2.1-dst/usr/local/include/* /usr/local/include
+          sudo cp -R build/gmp-6.2.1-dst/usr/local/lib/* /usr/local/lib
+          sudo cp -R build/mpfr-4.1.0-dst/usr/local/include/* /usr/local/include
+          sudo cp -R build/mpfr-4.1.0-dst/usr/local/lib/* /usr/local/lib
           Rscript -e "install.packages('surveyvoi', repos='https://cloud.r-project.org/')"
 
       - name: Collect
