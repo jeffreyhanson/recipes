@@ -64,7 +64,7 @@ jobs:
       - name: Verify package build
         run: |
           ls -la /usr/local/.disabled
-          sudo mv /usr/local/.disabled/R /usr/local/R
+          sudo mv /usr/local/.disabled/bin/R /usr/local/bin/R
           sudo cp build/gmp-6.2.1-dst/usr/local/include/* /usr/include
           sudo cp build/gmp-6.2.1-dst/usr/local/lib/* /usr/lib
           sudo cp build/mpfr-4.1.0-dst/usr/local/include/* /usr/include
