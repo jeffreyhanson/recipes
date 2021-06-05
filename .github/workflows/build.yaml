@@ -69,9 +69,9 @@ jobs:
           ls -la build/gmp-6.2.1-dst/usr/local
           ls -la build/gmp-6.2.1-dst/usr/local/include
           ls -la build/gmp-6.2.1-dst/usr/local/lib
-          la -la build/mpfr-4.1.0-dst
-          la -la build/mpfr-4.1.0-dst/usr/local/include
-          la -la build/mpfr-4.1.0-dst/usr/local/lib
+          ls -la build/mpfr-4.1.0-dst
+          ls -la build/mpfr-4.1.0-dst/usr/local/include
+          ls -la build/mpfr-4.1.0-dst/usr/local/lib
 
       - name: Verify package build
         run: |
